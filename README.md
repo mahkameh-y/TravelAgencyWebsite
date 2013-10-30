@@ -1,6 +1,9 @@
 TravelAgencyWebsite
 ===================
-This is a web application I developed for a fake travel agency. It uses Apache Tomcat as the Web server, 
+This is a web application I developed for a fake travel agency. It manages the flights, planes and 
+travellers information. 
+
+It uses Apache Tomcat as the Web server, 
 and MySQL as the DB server. The other technologies used in this application are Struts and Hibernate.
 
 TEAM 
