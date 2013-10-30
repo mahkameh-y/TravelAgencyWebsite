@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+        "hibernate-mapping-2.0.dtd" >
+
+
+
+<hibernate-mapping package="com.agency.domain">
+
+	<!-- PLANE TABLE-->
+	<class name="Plane" table="plane">
+   		<id name="id" column="id" type="int">
+   			<generator class="increment"/>
+   		</id>
+        <property name="number" column="number" type="java.lang.String"/>
+   		<property name="model" column="model" type="java.lang.String"/>
+   		<property name="capacity" column="capacity" type="int"/>
+        <set name="flights"  lazy="true">
+ 			<key column="plane" />
+ 			<one-to-many class="Flight" />
+ 		</set>
+
+	</class>
+
+	<!-- FLIGHT TABLE -->
+	<class name="Flight" table="flight">
+   		<id name="id" column="id" type="int">
+   			<generator class="increment"/>
+   		</id>
+        <property name="number" column="number" type="java.lang.String"/>
+        <many-to-one name="plane" column="plane" class="Plane"/>
+        <property name="date" column="date" type="java.sql.Date"/>
+   		<property name="capacity" column="capacity" type="int"/>
+        <property name="cost" column="cost" type="long"/>
+        <property name="time" column="time" type="java.sql.Time"/>
+        <property name="source" column="source" type="java.lang.String"/>
+        <property name="destination" column="destination" type="java.lang.String"/>
+
+   		<set name="reservation"  lazy="true">
+ 			<key column="flight" />
+ 			<one-to-many class="Reservation" />
+ 		</set>
+
+	</class>
+
+	<!--  PASSENGER TABLE -->
+	<class name="Passenger" table="passenger">
+   		<id name="id" column="id" type="int">
+   			<generator class="increment"/>
+   		</id>
+        <property name="nationalCode" column="nationalCode" type="java.lang.String"/>
+        <property name="name" column="name" type="java.lang.String"/>
+        <property name="lastName" column="lastName" type="java.lang.String"/>
+        <property name="telephone" column="telephone" type="java.lang.String"/>
+        <property name="address" column="address" type="java.lang.String"/>
+
+        <set name="reservation" lazy="true">
+ 			<key column="passenger" />
+ 			<one-to-many class="Reservation" />
+ 		</set>
+
+	</class>
+
+    <!--  RESERVATION TABLE -->
+	<class name="Reservation" table="reservation">
+        <id name="id" column="id" type="int">
+   			<generator class="increment"/>
+   		</id>
+        <many-to-one name="passenger" column="passenger" class="Passenger"/>
+   		<many-to-one name="flight" column="flight" class="Flight"/>
+    </class>
+
+    <!--  LOGIN TABLE -->
+	<class name="Login" table="login">
+        <id name="id" column="id" type="int">
+   			<generator class="increment"/>
+   		</id>
+        <property name="username" column="username" type="java.lang.String"/>
+        <property name="password" column="password" type="java.lang.String"/>
+        <property name="role" column="role" type="int"/>
+        <property name="passengerID" column="passengerID" type="int"/>
+
+    </class>
+
+    <!--  PERMISSION TABLE -->
+	<class name="Permission" table="permission">
+        <id name="id" column="id" type="int">
+   			<generator class="increment"/>
+   		</id>
+        <property name="actionURL" column="actionURL" type="java.lang.String"/>
+        <property name="role" column="role" type="int"/>
+    </class>
+
+    <!--  MENU TABLE -->
+	<class name="Menu" table="menu">
+        <id name="id" column="id" type="int">
+   			<generator class="increment"/>
+   		</id>
+        <property name="name" column="name" type="java.lang.String"/>
+        <property name="url" column="url" type="java.lang.String"/>
+        <property name="page" column="page" type="java.lang.String"/>
+        <property name="type" column="type" type="int"/>
+        <set name="access" lazy="true">
+ 			<key column="menu" />
+ 			<one-to-many class="MenuAccess" />
+ 		</set>
+    </class>
+
+    <!--  MENU ACCESS TABLE -->
+	<class name="MenuAccess" table="menuaccess">
+        <id name="id" column="id" type="int">
+   			<generator class="increment"/>
+   		</id>
+        <property name="role" column="role" type="int"/>
+        <many-to-one name="menu" column="menu" class="Menu"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="Agency 1.0 4shanbe AM" default="run" basedir=".">
+	<property name="app.name" value="Agency1"/>
+
+	<property name="tomcat.dir" value="D:\Program Files\MyEclipse\eclipse\jakarta-tomcat-5.0.19\jakarta-tomcat-5.0.19" />
+	<property name="deploy.dir" value="${tomcat.dir}/webapps/${app.name}" />
+
+	<property name="src.dir" value="./src"/>
+    <property name="main-package" value="./src/com/agency"/>
+    <property name="lib.dir" value="./WEB-INF/lib"/>
+	<property name="build.dir" value="./build"/>
+
+	<path id="classpath">
+		<fileset dir="${tomcat.dir}/common/lib">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+	    <mkdir dir="${build.dir}"/>
+	</target>
+
+    <target name="build-hibernate" depends="init">
+		<javac destdir="${build.dir}"
+			classpathref="classpath">
+            <src path="${main-package}/hibernate"/>
+        </javac>
+	</target>
+
+    <target name="build-domain" depends="build-hibernate">
+		<javac destdir="${build.dir}"
+			classpathref="classpath">
+            <src path="${main-package}/domain"/>
+        </javac>
+	</target>
+
+    <target name="build-security" depends="build-domain">
+		<javac destdir="${build.dir}"
+			classpathref="classpath">
+            <src path="${main-package}/security"/>
+        </javac>
+	</target>
+
+    <target name="build-form" depends="build-security">
+		<javac destdir="${build.dir}"
+			classpathref="classpath">
+            <src path="${main-package}/struts/form"/>
+        </javac>
+	</target>
+
+    <target name="build-action" depends="build-form">
+		<javac destdir="${build.dir}"
+			classpathref="classpath">
+            <src path="${main-package}/struts/action"/>
+        </javac>
+	</target>
+
+
+    <target name="build" depends="build-action"/>
+
+
+
+    <target name="deploy" depends="build">
+		<mkdir dir="${deploy.dir}"/>
+		<mkdir dir="${deploy.dir}/WEB-INF"/>
+
+        <copy todir="${deploy.dir}/WEB-INF">
+			<fileset dir="./WEB-INF"/>
+		</copy>
+
+        <copy todir="${deploy.dir}/WEB-INF/classes">
+			<fileset dir="${build.dir}" />
+		</copy>
+
+        <copy todir="${deploy.dir}">
+			<fileset dir="./resources" />
+		</copy>
+
+        <copy todir="${deploy.dir}/WEB-INF/lib">
+			<fileset dir="${lib.dir}" />
+		</copy>
+
+        <copy todir="${deploy.dir}/WEB-INF/classes">
+              <fileset file="${src.dir}/hibernate.cfg.xml" />
+        </copy>
+        <copy todir="${deploy.dir}/WEB-INF/classes/com/agency/domain">
+              <fileset file="${main-package}/domain/agency.hbm.xml" />
+        </copy>
+        <copy todir="${deploy.dir}/WEB-INF/classes/com/agency/struts">
+              <fileset file="${main-package}/struts/*.properties" />
+          </copy>
+
+
+
+        <touch file="./WEB-INF/web.xml" />
+		<copy file="./WEB-INF/web.xml" todir="${tomcat.dir}/conf/Catalina/localhost" />
+        <copy file="./WEB-INF/web.xml" todir="${deploy.dir}/WEB-INF" />
+    </target>
+
+    <target name="run" depends="deploy">
+    </target>
+
+    <target name="clean">
+		<!--<delete file="${tomcat.dir}/conf/Catalina/localhost/web.xml"/>
+		<delete file="${deploy.dir}" />-->
+		<delete dir="${build.dir}"/>
+	</target>
+
+
+</project>

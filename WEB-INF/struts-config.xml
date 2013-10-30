@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <data-sources/>
+    <form-beans>
+        <!-- LOGIN -->
+        <form-bean name="loginForm" type="com.agency.struts.form.LoginForm"/>
+        <!-- PLANE -->
+        <form-bean name="planeForm" type="com.agency.struts.form.PlaneForm"/>
+        <!-- FLIGHT -->
+        <form-bean name="flightForm" type="com.agency.struts.form.FlightForm"/>
+        <!-- PASSENGER -->
+        <form-bean name="passengerForm" type="com.agency.struts.form.PassengerForm"/>
+        <!-- RESERVATION -->
+        <form-bean name="reservationForm" type="com.agency.struts.form.ReservationForm"/>
+
+    </form-beans>
+
+    <global-exceptions/>
+    <global-forwards/>
+    <action-mappings>
+        <!-- LOGIN -->
+        <action
+                attribute="loginForm"
+                input="/index.jsp"
+                name="loginForm"
+                path="/login"
+                scope="request"
+                type="com.agency.struts.action.LoginAction"
+                validate="false">
+            <forward name="welcome" path="/WEB-INF/welcome.jsp"/>
+            <forward name="error" path="/index.jsp"/>
+        </action>
+
+        <!-- PLANE -->
+        <action
+                attribute="planeForm"
+                input="/plane/plane.jsp"
+                name="planeForm"
+                path="/plane"
+                scope="request"
+                type="com.agency.struts.action.PlaneAction"
+                validate="false">
+            <forward name="insertPage" path="/WEB-INF/plane/plane.jsp"/>
+            <forward name="resultPage" path="/WEB-INF/plane/search-result.jsp"/>
+            <forward name="planeFrame" path="/frame/plane.jsp"/>
+            <forward name="forbidden" path="/forbidden.html"/>
+        </action>
+
+
+        <!--<action
+                attribute="planeForm"
+                input="/plane/plane.jsp"
+                name="planeForm"
+                path="/plane"
+                scope="request"
+                type="com.agency.struts.action.PlaneAction"
+                validate="false">
+            <forward name="insertPage" path="/WEB-INF/plane/plane.jsp"/>
+            <forward name="resultPage" path="/WEB-INF/plane/search-result.jsp"/>
+            <forward name="planeFrame" path="/WEB-INF/flight/frame/plane.jsp"/>
+            <forward name="forbidden" path="/forbidden.html"/>
+        </action>-->
+
+
+        <!-- FLIGHT -->
+        <action
+                attribute="flightForm"
+                input="/flight/flight.jsp"
+                name="flightForm"
+                path="/flight"
+                scope="request"
+                type="com.agency.struts.action.FlightAction"
+                validate="false">
+            <forward name="insertPage" path="/WEB-INF/flight/flight.jsp"/>
+            <forward name="resultPage" path="/WEB-INF/flight/search-result.jsp"/>
+            <forward name="flightFrame" path="/frame/flight.jsp"/>
+            <forward name="passengerFrame" path="/frame/passenger.jsp"/>
+            <forward name="forbidden" path="/forbidden.html"/>
+        </action>
+
+        <!-- PASSENGER -->
+        <action
+                attribute="passengerForm"
+                input="/passenger/passenger.jsp"
+                name="passengerForm"
+                path="/passenger"
+                scope="request"
+                type="com.agency.struts.action.PassengerAction"
+                validate="false">
+            <forward name="insertPage" path="/WEB-INF/passenger/passenger.jsp"/>
+            <forward name="resultPage" path="/WEB-INF/passenger/search-result.jsp"/>
+            <forward name="fullInfoPage" path="/WEB-INF/passenger/full-search-result.jsp"/>
+            <forward name="passengerFrame" path="/frame/passenger.jsp"/>
+            <forward name="forbidden" path="/forbidden.html"/>
+        </action>
+
+        <!-- RESERVATION -->
+        <action
+                attribute="reservationForm"
+                input="/passenger/passenger.jsp"
+                name="reservationForm"
+                path="/reservation"
+                scope="request"
+                type="com.agency.struts.action.ReservationAction"
+                validate="false">
+            <forward name="insertPage" path="/WEB-INF/passenger/passenger.jsp"/>
+            <forward name="resultPage" path="/WEB-INF/passenger/search-result.jsp"/>
+            <forward name="fullInfoPage" path="/WEB-INF/passenger/full-search-result.jsp"/>
+            <forward name="passengerFrame" path="/frame/passenger.jsp"/>
+            <forward name="forbidden" path="/forbidden.html"/>
+        </action>
+
+        <!--<action
+                attribute="reservationForm"
+                input="/passenger/passenger.jsp"
+                name="reservationForm"
+                path="/reservation"
+                scope="request"
+                type="com.agency.struts.action.ReservationAction"
+                validate="false">
+            <forward name="insertPage" path="/WEB-INF/passenger/passenger.jsp"/>
+            <forward name="resultPage" path="/WEB-INF/passenger/search-result.jsp"/>
+            <forward name="fullInfoPage" path="/WEB-INF/passenger/full-search-result.jsp"/>
+            <forward name="passengerFrame" path="/WEB-INF/flight/frame/passenger.jsp"/>
+            <forward name="forbidden" path="/forbidden.html"/>
+        </action>-->
+
+
+    </action-mappings>
+
+    <message-resources parameter="com.agency.struts.ApplicationResources"/>
+</struts-config>
+
